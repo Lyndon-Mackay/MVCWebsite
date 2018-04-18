@@ -60,6 +60,7 @@ ul{
 .text-centred{
     max-width: 100%;
     width: 680px;
+    margin:auto;
 }
 .table-title{
     background-color: lightcyan;

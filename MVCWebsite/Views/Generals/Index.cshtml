@@ -1,38 +1,31 @@
 ﻿@model IEnumerable<MVCWebsite.Models.General>
 
 @{
-    Layout = null;
+    ViewBag.Title = "Generals";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Country)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Comments)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Wiki_link)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
+<h2 >List of Generals</h2>
+<table class="table">
+    <tr class="table-title">
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comments)
+        </th>
+        <th class="non-sortable">
+            @Html.DisplayNameFor(model => model.Wiki_link)
+        </th>
+        <th class="non-sortable">Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -44,16 +37,12 @@
                 @Html.DisplayFor(modelItem => item.Comments)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Wiki_link)
+                <a href="@Html.DisplayFor(model => item.Wiki_link)">@Html.DisplayFor(model => item.Wiki_link)</a>
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+                @Html.ActionLink("Details", "Details", new { id = item.ID })
             </td>
         </tr>
     }
-    
-    </table>
-</body>
-</html>
+
+</table>

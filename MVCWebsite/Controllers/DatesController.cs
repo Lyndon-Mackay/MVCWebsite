@@ -20,21 +20,6 @@ namespace MVCWebsite.Controllers
             return View(db.Dates.ToList());
         }
 
-        // GET: Dates/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Date date = db.Dates.Find(id);
-            if (date == null)
-            {
-                return HttpNotFound();
-            }
-            return View(date);
-        }
-
         // GET: Dates/Create
         public ActionResult Create()
         {
