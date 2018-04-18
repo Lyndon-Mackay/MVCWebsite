@@ -1,0 +1,73 @@
+/* You can add global styles to this file, and also import other style files */
+* > body {
+    font-size: 18px;
+}
+a {
+	color: cornflowerblue;
+	font-size: 20px;
+	margin: auto 2% auto 2%;
+ }
+ a:hover {
+	background: azure;
+	color: orange;
+ }
+ p{
+    text-align: center;
+    margin-top: 30px;
+ }
+body {
+    background-color: azure;
+}
+div
+{
+    margin: auto;
+}
+h1,h2,h3,h4,h5 {
+	color: dodgerblue;
+	text-align: center;
+ }
+li {
+	margin-bottom: 5em;
+	margin-top: 5em;
+    text-align: center;
+ }
+nav {
+	background-color: lightsteelblue;
+	left: 0px;
+	position: fixed;
+	text-align: center;
+	top: 0px;
+	width: 100%;
+ }
+ nav > a{
+    color: rgb(13, 28, 59);
+ }
+ table{
+    margin: auto;
+    border-collapse: collapse;
+ }
+ td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+ul{
+    list-style: none;
+}
+.center-div{
+    text-align: center;
+}
+.text-centred{
+    max-width: 100%;
+    width: 680px;
+}
+.table-title{
+    background-color: lightcyan;
+}
+
+
+
+
+ 
+ 
+
