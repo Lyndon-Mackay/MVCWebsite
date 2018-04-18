@@ -13,11 +13,23 @@ namespace MVCWebsite.Controllers
     public class DatesController : Controller
     {
         private DateDBContext db = new DateDBContext();
-
         // GET: Dates
-        public ActionResult Index()
+        /*public ActionResult Index()
         {
             return View(db.Dates.ToList());
+        }*/
+        public ActionResult Index(string sort)
+        {
+            var dates = from d in db.Dates
+                        orderby d.Time
+                        select d;
+            
+            if(sort != null && sort.Equals("desc"))
+            {
+                dates.Reverse();
+            }
+            
+            return View(dates.ToList());
         }
 
         // GET: Dates/Create
