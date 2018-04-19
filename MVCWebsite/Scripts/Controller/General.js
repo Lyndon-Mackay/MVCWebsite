@@ -9,7 +9,7 @@
         let column = element.innerHTML.trim();
         let search = new RegExp("SearchString=[^&]+");
         //hacky do not like but cant get captioning
-        let searchExec = search.exec(location)[0].replace("SearchString=", "")
+        let searchExec = search.exec(location)[0].replace("SearchString=", "");
 
         location = location.split('?')[0] + "?sort=" + sort + "&column=" + column;
         if (searchExec.length > 1) {
