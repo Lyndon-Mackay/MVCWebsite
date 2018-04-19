@@ -9,8 +9,8 @@
 <h2>List of Generals</h2>
 <form>
     <p>
-        Search name or country: <input type="text" name="SearchString">
-        <input type="submit" value="Filter" />
+        Search name or country: <input type="text" name="SearchString" value="@Request.Params["SearchString"]">
+        <input type="submit" value="Search" />
     </p>
 </form>
 <table class="table">
