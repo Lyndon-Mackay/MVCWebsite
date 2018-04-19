@@ -1,6 +1,8 @@
 ﻿using MVCWebsite.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq.Dynamic;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -12,9 +14,10 @@ namespace MVCWebsite.Controllers
     {
         GenDBContext db = new GenDBContext();
         // GET: Generals
-        public ActionResult Index()
+        public ActionResult Index(string column = "ID", string sort = "asc")
         {
-            return View(db.Generals);
+            var generals = db.Generals.OrderBy(column + " " +sort);
+            return View(generals.ToList());
         }
         public ActionResult Details(int? id)
         {

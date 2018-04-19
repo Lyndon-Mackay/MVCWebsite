@@ -16,5 +16,4 @@
         }
         window.location.href = location;
     });
-    // do stuff when DOM is ready
 });
