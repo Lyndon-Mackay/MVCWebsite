@@ -11,11 +11,11 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
-    <tr>
-        <th >
+    <tr class="table-title">
+        <th id="@Html.DisplayNameFor(Model => Model.Time)">
             @Html.DisplayNameFor(model => model.Time)
         </th>
-        <th></th>
+        <th class="non-sortable">Actions</th>
     </tr>
 
     @foreach (var item in Model)
