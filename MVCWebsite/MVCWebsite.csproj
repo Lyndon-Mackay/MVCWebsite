@@ -138,6 +138,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\ContextDate\201804180228324_InitialCreate.cs" />
+    <Compile Include="Migrations\ContextDate\201804180228324_InitialCreate.Designer.cs">
+      <DependentUpon>201804180228324_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ContextDate\Configuration.cs" />
     <Compile Include="Models\Date.cs" />
     <Compile Include="Models\General.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -163,6 +169,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\ContextDate\201804180228324_InitialCreate.resx">
+      <DependentUpon>201804180228324_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
