@@ -1,16 +1,16 @@
 ﻿$(document).ready(function () {
     $("#Time").click(() => {
-        let location = window.location.href
+        let location = window.location.href;
         //currently not scalable but only one property
         if (location.endsWith("/dates")) {
             location = "?sort=desc";
         }
         else {
             if (location.includes("sort=desc")) {
-                location = location.replace("sort=desc", "sort=asc")
+                location = location.replace("sort=desc", "sort=asc");
             }
             else {
-                location = location.replace("sort=asc", "sort=desc")
+                location = location.replace("sort=asc", "sort=desc");
             }
 
         }

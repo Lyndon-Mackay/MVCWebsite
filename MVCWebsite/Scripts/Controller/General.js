@@ -8,12 +8,15 @@
         let sort = location.includes("sort=desc") ? "asc" : "desc";
         let column = element.innerHTML.trim();
         let search = new RegExp("SearchString=[^&]+");
-        //hacky do not like but cant get captioning
-        let searchExec = search.exec(location)[0].replace("SearchString=", "");
-
+        let searchexe = search.exec(location)
+        let text = "";
+        if (searchexe != null) {
+            //hacky do not like but cant get captioning
+            let text = searchexe[0].replace("SearchString=", "");
+        }
         location = location.split('?')[0] + "?sort=" + sort + "&column=" + column;
-        if (searchExec.length > 1) {
-            location += "&SearchString=" + searchExec;
+        if (text.length > 1) {
+            location += "&SearchString=" + text;
         }
         window.location.href = location;
     });
