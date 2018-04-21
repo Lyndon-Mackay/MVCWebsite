@@ -27,10 +27,16 @@ div
 {
     margin: auto;
 }
+form{
+    margin-bottom:.5em;
+}
 h1,h2,h3,h4,h5 {
 	color: dodgerblue;
 	text-align: center;
  }
+label{
+    display:block;
+}
 li {
 	margin-bottom: 5em;
 	margin-top: 5em;
@@ -77,8 +83,11 @@ ul{
 .table-title > th:hover:not(.non-sortable) {
    background-color: aliceblue;
 }
-
-
+.checkbox-div {
+    margin-top: .5em;
+    margin-bottom:.5em;
+    display: inline-flex;
+}
 
  
  

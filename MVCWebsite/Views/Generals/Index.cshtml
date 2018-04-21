@@ -8,13 +8,17 @@
 
 <h2>List of Generals</h2>
 <form>
-    <p>
-        Search name or country: <input type="text" id="SearchBar" name="SearchString" value="@Request.Params["SearchString"]">
+    <label for="SearchBar">
+        Enter keywords for search:
+        <input type="text" id="SearchBar" name="SearchString" value="@Request.Params["SearchString"]">
+    </label>
+    <div class="checkbox-div">
         <input type="checkbox" name="option1" value="SearchCountry">Country<br>
         <input type="checkbox" name="option2" value="SearchName">Name<br>
         <input type="checkbox" name="option3" value="SearchComments">Comments<br>
-        <input type="submit" value="Search" />
-    </p>
+    </div>
+    <input type="submit" value="Search" />
+
 </form>
 <table class="table">
     <tr class="table-title">
