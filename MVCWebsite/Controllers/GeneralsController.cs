@@ -10,13 +10,25 @@ namespace MVCWebsite.Controllers
     {
         GenDBContext db = new GenDBContext();
         // GET: Generals
-        public ActionResult Index(string SearchString = "", string column = "ID", string sort = "asc")
+        public ActionResult Index(string SearchString = "", string column = "ID", string sort = "asc",
+            bool SearchCountry = false, bool SearchName = false, bool SearchComments = false)
         {
             var generals = db.Generals.OrderBy(column + " " + sort);
-             
+
             if (!string.IsNullOrEmpty(SearchString))
             {
-                generals = generals.Where(g => g.Country.Contains(SearchString) || g.Name.Contains(SearchString));
+                if (SearchCountry)
+                {
+                    generals = generals.Where(g => g.Country.Contains(SearchString));
+                }
+                if(SearchName)
+                {
+                    generals = generals.Where(g => g.Name.Contains(SearchString));
+                }
+                if (SearchComments)
+                {
+                    generals = generals.Where(g => g.Comments.Contains(SearchString));
+                }
             }
             return View(generals.ToList());
         }

@@ -20,6 +20,7 @@ p > a {
     margin-right: 0px;
 }
 
+
 body {
     background-color: azure;
 }
@@ -34,6 +35,9 @@ h1,h2,h3,h4,h5 {
 	color: dodgerblue;
 	text-align: center;
  }
+input {
+    margin-right: 10px;
+}
 label{
     display:block;
 }
@@ -67,6 +71,12 @@ ul{
 }
 .center-div{
     text-align: center;
+}
+
+.error {
+	color: red;
+	margin-top: 10px;
+}
 }
 .text-centred{
     max-width: 100%;

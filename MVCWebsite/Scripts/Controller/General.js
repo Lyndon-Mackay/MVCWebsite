@@ -20,4 +20,19 @@
         }
         window.location.href = location;
     });
+    $("#SearchForm").submit(e => {
+        let checked = $("input[type=checkbox]:checked").length;
+        if (checked == 0) {
+            if (!$("#formErrorText").length) {
+                let p = $("<p>", { id: "formErrorText", "class": "error" });
+                p.append("One checkbox must be selected");
+                $("#SearchForm").append(p);
+            }
+            else {
+               $("#formErrorText").fadeOut(100).fadeIn(100);
+            }
+            return false;
+        }
+
+    })
 })
