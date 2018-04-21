@@ -1,0 +1,19 @@
+$(document).ready(function () {
+    $("#Time").click(function () {
+        var location = window.location.href;
+        //currently not scalable but only one property
+        if (location.endsWith("/dates")) {
+            location = "?sort=desc";
+        }
+        else {
+            if (location.includes("sort=desc")) {
+                location = location.replace("sort=desc", "sort=asc");
+            }
+            else {
+                location = location.replace("sort=asc", "sort=desc");
+            }
+        }
+        window.location.href = location;
+    });
+});
+//# sourceMappingURL=Date.js.map

@@ -4,7 +4,10 @@
     ViewBag.Title = "Generals";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@section Scripts {
+    @Scripts.Render("~/bundles/generalController")
+    @Scripts.Render("~/bundles/highlight")
+}
 
 <h2>List of Generals</h2>
 <p>
@@ -16,17 +19,20 @@
         <input type="text" id="SearchBar" name="SearchString" value="@Request.Params["SearchString"]">
     </label>
     <div class="checkbox-div">
-        <label for="CountryCheckbox"> Country
+        <label for="CountryCheckbox">
+            Country
             <input type="checkbox" id="CountryCheckbox" name="SearchCountry" value="True">
         </label>
-        <label for="NameCheckbox"> Name
+        <label for="NameCheckbox">
+            Name
             <input type="checkbox" id="NameCheckbox" name="SearchName" value="True">
-            </label>
-        <label for="CommentsCheckbox"> Comments
+        </label>
+        <label for="CommentsCheckbox">
+            Comments
             <input type="checkbox" id="CommentsCheckbox" name="SearchComments" value="True">
         </label>
     </div>
-    <input type="submit" value="Search" on/>
+    <input type="submit" value="Search" on />
 
 </form>
 <table class="table">
@@ -68,7 +74,3 @@
     }
 
 </table>
-@section Scripts {
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/generalController")
-}

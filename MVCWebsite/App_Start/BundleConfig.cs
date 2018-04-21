@@ -12,10 +12,12 @@ namespace MVCWebsite.App_Start
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/highlight").Include(
+                "~/Scripts/jquery.highlight-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/dateController").Include(
-                "~/Scripts/Controller/Date.js"));
+                "~/Scripts/Content/Controller/Date.js"));
             bundles.Add(new ScriptBundle("~/bundles/generalController").Include(
-                "~/Scripts/Controller/General.js"));
+                "~/Scripts/Content/Controller/General.js"));
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/stylesheet.css"));
         }

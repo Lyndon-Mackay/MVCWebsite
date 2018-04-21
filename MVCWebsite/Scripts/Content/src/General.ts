@@ -29,10 +29,11 @@
                 $("#SearchForm").append(p);
             }
             else {
-               $("#formErrorText").fadeOut(100).fadeIn(100);
+                $("#formErrorText").fadeOut(100).fadeIn(100);
             }
             return false;
         }
 
-    })
+    });
+
 })

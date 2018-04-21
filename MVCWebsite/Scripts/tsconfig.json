@@ -1,0 +1,19 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "lib": [ "dom", "es2017" ],
+    "noEmitOnError": true,
+    "noImplicitAny": false,
+    "outDir": "./Content/Controller/",
+    "removeComments": false,
+    "rootDir": "./Content/src/",
+    "sourceMap": true,
+    "target": "es5"
+  },
+  "include": [ "./" ],
+
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+  ]
+}
