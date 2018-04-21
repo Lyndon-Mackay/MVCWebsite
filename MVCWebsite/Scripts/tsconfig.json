@@ -8,7 +8,7 @@
     "removeComments": false,
     "rootDir": "./Content/src/",
     "sourceMap": true,
-    "target": "es5"
+    "target": "es6"
   },
   "include": [ "./" ],
 

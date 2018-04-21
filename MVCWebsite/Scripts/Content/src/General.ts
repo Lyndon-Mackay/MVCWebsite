@@ -1,25 +1,40 @@
 ﻿$(document).ready(() => {
-
+    $("input[type=checkbox]")
+    {
+        let locationParamsString = window.location.search.substr(1);
+        let params = getAllParams(locationParamsString);
+        for (var i = 0; i < params.length; i++) {
+            //console.log("in " + params[i].name);
+            //console.log(`is checkbox ${params[i].name} ` + $(`input[name=${params[i].name}]`).is(":checkbox"));
+            if ($(`input[name=${params[i].name}]`).is(":checkbox")) {
+                $(`input[name=${params[i].name}]`).prop('checked', params[i].value) 
+            }
+        }
+    }
+    //clicking on a sortable column change sort and column otherwise as normal
     $(".table-title").children(":not(.non-sortable)").click(e => {
         let element = e.currentTarget;
         let location = window.location.href;
 
+        //gets url after ?
+        let locationParamsString = window.location.search.substr(1);
+        let params = getAllParams(locationParamsString);
+        let sort = params.find(p => p.name == "sort");
+        if (sort == undefined) {
+            sort = new Params("sort", "desc");
+            params.push(sort);
+        }
+        console.log("params" + params)
         //switch sorting
-        let sort = location.includes("sort=desc") ? "asc" : "desc";
+        sort.value = sort.value == "desc" ? "asc" : "desc";
+
         let column = element.innerHTML.trim();
-        let search = new RegExp("SearchString=[^&]+");
-        let searchexe = search.exec(location)
-        let text = "";
-        if (searchexe != null) {
-            //hacky do not like but cant get captioning
-            let text = searchexe[0].replace("SearchString=", "");
-        }
-        location = location.split('?')[0] + "?sort=" + sort + "&column=" + column;
-        if (text.length > 1) {
-            location += "&SearchString=" + text;
-        }
-        window.location.href = location;
+        params.push(new Params("column", column));
+        location = location.split('?')[0] + "?" + params.join("&").substr(0);
+        //beaware of location switching clearing the console
+        //window.location.href = location;
     });
+    //make sure at least one checkbox is checked
     $("#SearchForm").submit(e => {
         let checked = $("input[type=checkbox]:checked").length;
         if (checked == 0) {
@@ -37,3 +52,30 @@
     });
 
 })
+class Params {
+    name: string;
+    value: string;
+    constructor(name: string, value: string) {
+        this.name = name;
+        this.value = value;
+    }
+    toString(): string {
+        if (this.name.length > 1 && this.value.length > 1) {
+            return this.name + "=" + this.value
+        }
+        return ""
+    }
+}
+
+function getAllParams(paramsString: string): Params[] {
+    let params: Params[] = new Array();
+
+    let keyValueString = paramsString.split('&');
+    //let statement did not work
+    for (var i =0; i < keyValueString.length;i++) {
+        let split = keyValueString[i].split('=');
+        params.push(new Params(split[0], split[1]));
+    }
+
+    return params;
+}
