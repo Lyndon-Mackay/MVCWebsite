@@ -25,7 +25,7 @@
         if (checked == 0) {
             if (!$("#formErrorText").length) {
                 let p = $("<p>", { id: "formErrorText", "class": "error" });
-                p.append("One checkbox must be selected");
+                p.append("At least one checkbox must be selected");
                 $("#SearchForm").append(p);
             }
             else {
