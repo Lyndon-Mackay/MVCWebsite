@@ -260,5 +260,5 @@ paket-files/
 __pycache__/
 *.pyc
 
-#jquery
-/scripts/
+
+/Scripts/Content/Controller/
