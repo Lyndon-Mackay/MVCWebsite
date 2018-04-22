@@ -32,7 +32,7 @@
         params.push(new Params("column", column));
         location = location.split('?')[0] + "?" + params.join("&").substr(0);
         //beaware of location switching clearing the console
-        //window.location.href = location;
+        window.location.href = location;
     });
     //make sure at least one checkbox is checked
     $("#SearchForm").submit(e => {

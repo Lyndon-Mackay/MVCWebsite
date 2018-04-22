@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    $("#Time").click(function () {
-        var location = window.location.href;
+    $("#Time").click(() => {
+        let location = window.location.href;
         //currently not scalable but only one property
         if (location.endsWith("/dates")) {
             location = "?sort=desc";
