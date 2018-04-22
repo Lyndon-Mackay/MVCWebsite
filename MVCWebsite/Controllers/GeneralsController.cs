@@ -30,35 +30,27 @@ namespace MVCWebsite.Controllers
 
                 if (SearchCountry)
                 {
-                    
-                    MemberExpression searchproperty = Expression.Property(parameter, "Country");
-
-                    MethodCallExpression containsInvoke = Expression.Call(searchproperty, containsInfo, searchArgument);
+                    MethodCallExpression containsInvoke = CreateInvoke(parameter, containsInfo, searchArgument,"Country");
 
                     conditions.Add(containsInvoke);
-                    //Expression<Func<General, bool>> lambda = Expression.Lambda<Func<General, bool>>(containsInvoke, parameter);
 
                 }
                 if (SearchName)
                 {
-                    MemberExpression searchproperty = Expression.Property(parameter, "Name");
-
-                    MethodCallExpression containsInvoke = Expression.Call(searchproperty, containsInfo, searchArgument);
+                    MethodCallExpression containsInvoke = CreateInvoke(parameter, containsInfo, searchArgument, "Name");
                     conditions.Add(containsInvoke);
                 }
                 if (SearchComments)
                 {
-                    MemberExpression searchproperty = Expression.Property(parameter, "Comments");
-
-                    MethodCallExpression containsInvoke = Expression.Call(searchproperty, containsInfo, searchArgument);
+                    MethodCallExpression containsInvoke = CreateInvoke(parameter, containsInfo, searchArgument, "Comments");
 
                     conditions.Add(containsInvoke);
                 }
-                if(conditions.Count ==0)
+                if (conditions.Count == 0)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                else if(conditions.Count == 1)
+                else if (conditions.Count == 1)
                 {
                     var vlist = generals.Where(Expression.Lambda<Func<General, bool>>(conditions[0], parameter));
                     return View(vlist.ToList());
@@ -66,7 +58,7 @@ namespace MVCWebsite.Controllers
                 else
                 {
                     Expression e = Expression.OrElse(conditions[0], conditions[1]);
-                    //skip first as they are already done
+                    //skip first two as they are already done
                     for (int i = 2; i < conditions.Count; i++)
                     {
                         e = Expression.OrElse(e, conditions[i]);
@@ -77,6 +69,14 @@ namespace MVCWebsite.Controllers
                 }
             }
             return View(generals.ToList());
+        }
+        [NonAction]
+        private static MethodCallExpression CreateInvoke(ParameterExpression parameter, MethodInfo containsInfo, ConstantExpression searchArgument,string propertyName)
+        {
+            MemberExpression searchproperty = Expression.Property(parameter, propertyName);
+
+            MethodCallExpression containsInvoke = Expression.Call(searchproperty, containsInfo, searchArgument);
+            return containsInvoke;
         }
 
         public ActionResult Details(int? id)

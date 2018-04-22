@@ -20,7 +20,7 @@ $(document).ready(() => {
         let params = getAllParams(locationParamsString);
         let sort = params.find(p => p.name == "sort");
         if (sort == undefined) {
-            sort = new Params("sort", "desc");
+            sort = new Params("sort", "asc");
             params.push(sort);
         }
         console.log("params" + params);
