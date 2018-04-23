@@ -53,6 +53,10 @@ namespace MVCWebsite.Controllers
                 {
                     Expression e = conditions.Aggregate<Expression>(
                         (combinedExpression, next) => combinedExpression = Expression.OrElse(combinedExpression, next));
+                    while(e.CanReduce)
+                    {
+                        e = e.Reduce();
+                    }
                     var vList = generals.Where(Expression.Lambda<Func<General, bool>>(e, parameter));
                     return PagedView(vList.ToList(), page, pageSize);
                 }
