@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System;
 using System.Collections.Generic;
-using PagedList;
+
 
 namespace MVCWebsite.Controllers
 {
@@ -15,7 +15,7 @@ namespace MVCWebsite.Controllers
     {
         GenDBContext db = new GenDBContext();
         // GET: Generals
-        public ActionResult Index(int? page, int pageSize = 25, string SearchString = "", string column = "ID", string sort = "asc",
+        public ActionResult Index(string SearchString = "", string column = "ID", string sort = "asc",
             bool SearchCountry = false, bool SearchName = false, bool SearchComments = false)
         {
 
@@ -60,13 +60,13 @@ namespace MVCWebsite.Controllers
                         e = e.Reduce();
                     }
                     var vList = generals.Where(Expression.Lambda<Func<General, bool>>(e, parameter));
-                    return PagedView(vList.ToList(), page, pageSize);
+                    return View(vList.ToList());
                 }
 
 
 
             }
-            return PagedView(db.Generals.ToList(), page, pageSize);
+            return View(db.Generals.ToList());
         }
         /// <summary>
         /// Used to create a call for a method that uses the search argument plus other built up expressions
@@ -86,20 +86,7 @@ namespace MVCWebsite.Controllers
             MethodCallExpression containsInvoke = Expression.Call(searchproperty, containsInfo, searchArgument);
             return containsInvoke;
         }
-        /// <summary>
-        /// This method is used to create a view that takes paging into account
-        /// </summary>
-        /// <param name="vList">the list of items to display</param>
-        /// <param name="page">optional page number defaults to 1</param>
-        /// <param name="pageSize">number of items per page defaults to 25</param>
-        /// <returns>The view to be displayed</returns>
-        [NonAction]
-        private ViewResult PagedView(List<General> vList, int? page, int pageSize = 25)
-        {
-            int pageNumber = (page ?? 1);
-            return View(vList.ToPagedList(pageNumber, pageSize));
 
-        }
         public ActionResult Details(int? id)
         {
             if (id == null)
