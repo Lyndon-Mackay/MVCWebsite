@@ -9,10 +9,7 @@
                 element.prop('checked', params[i].value);
                 //getting name without the search prefix and adding cell postfix for class
                 let name = element.attr('name').replace("Search", "") + "Cell";
-                console.log(params.find(p => p.name == "SearchString").value);
 
-                console.log($(`#${name}`));
-               // let columns = $(`#${name}`)
                 $(`td.${name}`).mark(params.find(p => p.name == "SearchString").value, {
                     "element": "span",
                     "className": "highlight"

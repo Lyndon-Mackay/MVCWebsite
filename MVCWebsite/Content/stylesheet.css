@@ -68,6 +68,20 @@ ul{
 .center-div{
     text-align: center;
 }
+.checkbox-div {
+    margin-top: .5em;
+    margin-bottom: .5em;
+    display: inline-flex;
+}
+.error {
+    margin-top:10px;
+    margin-bottom:10px;
+    color: red;
+}
+
+.highlight {
+    background-color: papayawhip;
+}
 .text-centred{
     max-width: 100%;
     width: 680px;
@@ -83,13 +97,5 @@ ul{
 .table-title > th:hover:not(.non-sortable) {
    background-color: aliceblue;
 }
-.checkbox-div {
-    margin-top: .5em;
-    margin-bottom:.5em;
-    display: inline-flex;
-}
 
-.highlight {
-    background-color: papayawhip;
-}
 
