@@ -4,10 +4,19 @@
         let locationParamsString = window.location.search.substr(1);
         let params = getAllParams(locationParamsString);
         for (var i = 0; i < params.length; i++) {
-            //console.log("in " + params[i].name);
-            //console.log(`is checkbox ${params[i].name} ` + $(`input[name=${params[i].name}]`).is(":checkbox"));
-            if ($(`input[name=${params[i].name}]`).is(":checkbox")) {
-                $(`input[name=${params[i].name}]`).prop('checked', params[i].value) 
+            let element = $(`input[name=${params[i].name}]`);
+            if (element.is(":checkbox")) {
+                element.prop('checked', params[i].value);
+                //getting name without the search prefix and adding cell postfix for class
+                let name = element.attr('name').replace("Search", "") + "Cell";
+                console.log(params.find(p => p.name == "SearchString").value);
+
+                console.log($(`#${name}`));
+               // let columns = $(`#${name}`)
+                $(`td.${name}`).mark(params.find(p => p.name == "SearchString").value, {
+                    "element": "span",
+                    "className": "highlight"
+                });
             }
         }
     }

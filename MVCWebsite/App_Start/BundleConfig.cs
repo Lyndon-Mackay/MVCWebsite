@@ -13,7 +13,7 @@ namespace MVCWebsite.App_Start
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/highlight").Include(
-                "~/Scripts/jquery.highlight-{version}.js"));
+                "~/Scripts/jquery.mark.min.js"));
             bundles.Add(new ScriptBundle("~/bundles/dateController").Include(
                 "~/Scripts/Content/Controller/Date.js"));
             bundles.Add(new ScriptBundle("~/bundles/generalController").Include(

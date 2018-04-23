@@ -89,6 +89,7 @@ ul{
     display: inline-flex;
 }
 
- 
- 
+.highlight {
+    background-color: papayawhip;
+}
 

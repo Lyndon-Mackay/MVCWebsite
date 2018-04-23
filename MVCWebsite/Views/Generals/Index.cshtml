@@ -40,13 +40,13 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
+            <td class="@Html.DisplayNameFor(Model => Model.Name)Cell">
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
+            <td class="@Html.DisplayNameFor(Model => Model.Country)Cell">
                 @Html.DisplayFor(modelItem => item.Country)
             </td>
-            <td>
+            <td class="@Html.DisplayNameFor(Model => Model.Comments)Cell">
                 @Html.DisplayFor(modelItem => item.Comments)
             </td>
             <td>
@@ -61,4 +61,5 @@
 </table>
 @section Scripts {
     @Scripts.Render("~/bundles/generalController")
+    @Scripts.Render("~/bundles/highlight")
 }
