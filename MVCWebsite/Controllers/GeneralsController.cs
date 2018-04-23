@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System;
 using System.Collections.Generic;
+using PagedList;
 
 namespace MVCWebsite.Controllers
 {
@@ -14,9 +15,10 @@ namespace MVCWebsite.Controllers
     {
         GenDBContext db = new GenDBContext();
         // GET: Generals
-        public ActionResult Index(string SearchString = "", string column = "ID", string sort = "asc",
+        public ActionResult Index(int? page, int pageSize = 25, string SearchString = "", string column = "ID", string sort = "asc",
             bool SearchCountry = false, bool SearchName = false, bool SearchComments = false)
         {
+
             var generals = db.Generals.OrderBy(column + " " + sort);
 
             if (!string.IsNullOrEmpty(SearchString))
@@ -30,8 +32,7 @@ namespace MVCWebsite.Controllers
 
                 if (SearchCountry)
                 {
-                    MethodCallExpression containsInvoke = CreateInvoke(parameter, containsInfo, searchArgument,"Country");
-
+                    MethodCallExpression containsInvoke = CreateInvoke(parameter, containsInfo, searchArgument, "Country");
                     conditions.Add(containsInvoke);
 
                 }
@@ -47,38 +48,52 @@ namespace MVCWebsite.Controllers
                     conditions.Add(containsInvoke);
                 }
                 if (conditions.Count == 0)
-                {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                else if (conditions.Count == 1)
-                {
-                    var vlist = generals.Where(Expression.Lambda<Func<General, bool>>(conditions[0], parameter));
-                    return View(vlist.ToList());
-                }
                 else
                 {
-                    Expression e = Expression.OrElse(conditions[0], conditions[1]);
-                    //skip first two as they are already done
-                    for (int i = 2; i < conditions.Count; i++)
-                    {
-                        e = Expression.OrElse(e, conditions[i]);
-                    }
-                    System.Diagnostics.Debug.WriteLine(e.Reduce());
-                    var vlist = generals.Where(Expression.Lambda<Func<General, bool>>(e, parameter));
-                    return View(vlist.ToList());
+                    Expression e = conditions.Aggregate<Expression>(
+                        (combinedExpression, next) => combinedExpression = Expression.OrElse(combinedExpression, next));
+                    var vList = generals.Where(Expression.Lambda<Func<General, bool>>(e, parameter));
+                    return PagedView(vList.ToList(), page, pageSize);
                 }
+
+
+
             }
-            return View(generals.ToList());
+            return PagedView(db.Generals.ToList(), page, pageSize);
         }
+        /// <summary>
+        /// 
+        /// 
+        /// </summary>
+        /// <param name="parameter">what database item property is to be called</param>
+        /// <param name="containsInfo">methodinfo intended to be the contains method , 
+        /// but could be any method with one argument for a string</param>
+        /// <param name="searchArgument">The argument used in the method e.g the search</param>
+        /// <param name="propertyName">which property to call</param>
+        /// <returns>an expression for method call intended to be used in a linq where statement</returns>
         [NonAction]
-        private static MethodCallExpression CreateInvoke(ParameterExpression parameter, MethodInfo containsInfo, ConstantExpression searchArgument,string propertyName)
+        private MethodCallExpression CreateInvoke(ParameterExpression parameter, MethodInfo containsInfo, ConstantExpression searchArgument, string propertyName)
         {
             MemberExpression searchproperty = Expression.Property(parameter, propertyName);
 
             MethodCallExpression containsInvoke = Expression.Call(searchproperty, containsInfo, searchArgument);
             return containsInvoke;
         }
+        /// <summary>
+        /// This method is used to create a view that takes paging into account
+        /// </summary>
+        /// <param name="vList">the list of items to display</param>
+        /// <param name="page">optional page number defaults to 1</param>
+        /// <param name="pageSize">number of items per page defaults to 25</param>
+        /// <returns>The view to be displayed</returns>
+        [NonAction]
+        private ViewResult PagedView(List<General> vList, int? page, int pageSize = 25)
+        {
+            int pageNumber = (page ?? 1);
+            return View(vList.ToPagedList(pageNumber, pageSize));
 
+        }
         public ActionResult Details(int? id)
         {
             if (id == null)
