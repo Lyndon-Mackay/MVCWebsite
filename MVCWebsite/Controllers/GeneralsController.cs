@@ -47,12 +47,14 @@ namespace MVCWebsite.Controllers
 
                     conditions.Add(containsInvoke);
                 }
+                // we should not be searching in no columns
                 if (conditions.Count == 0)
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 else
                 {
                     Expression e = conditions.Aggregate<Expression>(
                         (combinedExpression, next) => combinedExpression = Expression.OrElse(combinedExpression, next));
+                    //probably not reducable but worth having a look could save significant time in querying 
                     while(e.CanReduce)
                     {
                         e = e.Reduce();
@@ -67,8 +69,8 @@ namespace MVCWebsite.Controllers
             return PagedView(db.Generals.ToList(), page, pageSize);
         }
         /// <summary>
-        /// 
-        /// 
+        /// Used to create a call for a method that uses the search argument plus other built up expressions
+        /// the main point of this method is have common code save for the property being called.
         /// </summary>
         /// <param name="parameter">what database item property is to be called</param>
         /// <param name="containsInfo">methodinfo intended to be the contains method , 
