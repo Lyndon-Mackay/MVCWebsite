@@ -7,23 +7,24 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVCWebsite.Models;
+using PagedList;
 namespace MVCWebsite.Controllers
 {
     public class DatesController : Controller
     {
         private DateDBContext db = new DateDBContext();
-        public ActionResult Index(string sort)
+        public ActionResult Index(string sort,int? pageNum,int pageSize = 25)
         {
             var dates = from d in db.Dates
                         orderby d.Time
                         select d;
-            
-            if(sort != null && sort.Equals("desc"))
+            sort = sort ?? "asc";
+            if(sort.Equals("desc"))
             {
                 dates = dates.OrderByDescending(d => d.Time);
             }
-            
-            return View(dates.ToList());
+            int page= pageNum ?? 1;
+            return View(dates.ToPagedList(page,pageSize));
         }
 
         // GET: Dates/Create
