@@ -22,12 +22,12 @@
         let element = e.currentTarget;
         let location = window.location.href;
 
-        //gets url after ?
+        //gets url after the ?
         let locationParamsString = window.location.search.substr(1);
         let params = getAllParams(locationParamsString);
         let sort = params.find(p => p.name == "sort");
         if (sort == undefined) {
-            sort = new Params("sort", "asc");
+            sort = new Param("sort", "asc");
             params.push(sort);
         }
         console.log("params" + params)
@@ -35,8 +35,15 @@
         sort.value = sort.value == "desc" ? "asc" : "desc";
 
         let column = element.innerHTML.trim();
-        params.push(new Params("column", column));
-        location = location.split('?')[0] + "?" + params.join("&").substr(0);
+        let paramsColumn = params.find(p => p.name == "column")
+        if (paramsColumn == undefined) {
+            params.push(new Param("column", column));
+        }
+        else {
+            paramsColumn.value = column;
+        }
+
+        location = getParamsInLocation(location, params);
         //beaware of location switching clearing the console
         window.location.href = location;
     });
@@ -58,30 +65,3 @@
     });
 
 })
-class Params {
-    name: string;
-    value: string;
-    constructor(name: string, value: string) {
-        this.name = name;
-        this.value = value;
-    }
-    toString(): string {
-        if (this.name.length > 1 && this.value.length > 1) {
-            return this.name + "=" + this.value
-        }
-        return ""
-    }
-}
-
-function getAllParams(paramsString: string): Params[] {
-    let params: Params[] = new Array();
-
-    let keyValueString = paramsString.split('&');
-    //let statement did not work
-    for (var i =0; i < keyValueString.length;i++) {
-        let split = keyValueString[i].split('=');
-        params.push(new Params(split[0], split[1]));
-    }
-
-    return params;
-}

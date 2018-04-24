@@ -6,7 +6,9 @@
 }
 @section Scripts {
     @Scripts.Render("~/bundles/dateController")
+    @Scripts.Render("~/bundles/sharedController")
     @Styles.Render("~/Content/pagination")
+
 }
 
 <h2>Dates</h2>
@@ -43,4 +45,4 @@
  @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
 @Html.PagedListPager(Model, pageNum => Url.Action("Index",
-    new { pageNum }))
+    new { pageNum,ViewBag.sort }))

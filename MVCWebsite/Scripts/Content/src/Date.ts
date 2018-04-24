@@ -1,19 +1,23 @@
 ﻿$(document).ready(function () {
     $("#Time").click(() => {
         let location = window.location.href;
-        //currently not scalable but only one property
-        if (location.endsWith("/dates")) {
-            location = "?sort=desc";
+                                   //send everything after the ?
+        let params = getAllParams(window.location.search.substring(1));
+        let sort = params.find(p => p.name == "sort");
+        if (sort == undefined)
+        {
+            params.push(new Param("sort", "asc"));
         }
         else {
-            if (location.includes("sort=desc")) {
-                location = location.replace("sort=desc", "sort=asc");
+            if (sort.value == "desc") {
+                sort.value="asc";
             }
             else {
-                location = location.replace("sort=asc", "sort=desc");
+                sort.value = "desc";
             }
 
         }
+        location = getParamsInLocation(location, params);
         window.location.href = location;
     });
 });
