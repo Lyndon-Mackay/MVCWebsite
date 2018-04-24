@@ -125,6 +125,9 @@
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\LyndonMVCWebsite - Web Deploy.pubxml" />
+    <Content Include="Scripts\Content\Controller\Date.js" />
+    <Content Include="Scripts\Content\Controller\General.js" />
+    <Content Include="Scripts\Content\Controller\Shared.js" />
     <Content Include="Scripts\jquery.mark.min.js" />
     <Content Include="Scripts\tsconfig.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -182,7 +185,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\Content\Controller\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\ContextDate\201804180228324_InitialCreate.resx">
