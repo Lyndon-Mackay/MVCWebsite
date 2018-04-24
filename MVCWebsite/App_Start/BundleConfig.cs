@@ -19,7 +19,7 @@ namespace MVCWebsite.App_Start
             bundles.Add(new ScriptBundle("~/bundles/generalController").Include(
                 "~/Scripts/Content/Controller/General.js"));
             bundles.Add(new ScriptBundle("~/bundles/sharedController").Include(
-                "~/Scripts/Content/Controller/shared.js"));
+                "~/Scripts/Content/Controller/Shared.js"));
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/stylesheet.css"));
             bundles.Add(new StyleBundle("~/Content/pagination").Include(
