@@ -1,15 +1,17 @@
-﻿@model IEnumerable<MVCWebsite.Models.Date>
+﻿@model PagedList.IPagedList<MVCWebsite.Models.Date>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Dates";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Scripts {
     @Scripts.Render("~/bundles/dateController")
+    @Styles.Render("~/Content/pagination")
 }
 
 <h2>Dates</h2>
 <p>
-    clikc on the time stamp heading to change the sorting order add or remove as you like.
+    Click on the time stamp heading to change the sorting order add or remove as you like.
     (changes are permantly stored)
 </p>
 <p>
@@ -17,8 +19,9 @@
 </p>
 <table class="table">
     <tr class="table-title">
-        <th id="@Html.DisplayNameFor(Model => Model.Time)">
-            @Html.DisplayNameFor(model => model.Time)
+        <!--Need to get display name for but can't do that without-->
+        <th id="Time">
+            Time
         </th>
         <th class="non-sortable">Actions</th>
     </tr>
@@ -37,4 +40,7 @@
     }
 
 </table>
+ @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
+@Html.PagedListPager(Model, pageNum => Url.Action("Index",
+    new { pageNum }))
