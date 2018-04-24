@@ -20,7 +20,6 @@ namespace MVCWebsite.Controllers
         {
 
             var generals = db.Generals.OrderBy(column + " " + sort);
-
             if (!string.IsNullOrEmpty(SearchString))
             {
                 ParameterExpression parameter = Expression.Parameter(typeof(General), "g");
@@ -66,7 +65,7 @@ namespace MVCWebsite.Controllers
 
 
             }
-            return View(db.Generals.ToList());
+            return View(generals.ToList());
         }
         /// <summary>
         /// Used to create a call for a method that uses the search argument plus other built up expressions
