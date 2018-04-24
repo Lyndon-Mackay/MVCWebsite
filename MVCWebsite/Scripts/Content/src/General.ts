@@ -25,12 +25,12 @@
         //gets url after the ?
         let locationParamsString = window.location.search.substr(1);
         let params = getAllParams(locationParamsString);
+
         let sort = params.find(p => p.name == "sort");
         if (sort == undefined) {
             sort = new Param("sort", "asc");
             params.push(sort);
         }
-        console.log("params" + params)
         //switch sorting
         sort.value = sort.value == "desc" ? "asc" : "desc";
 
