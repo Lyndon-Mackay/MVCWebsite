@@ -18,11 +18,12 @@ namespace MVCWebsite.Controllers
             var dates = from d in db.Dates
                         orderby d.Time
                         select d;
-            sort = sort ?? "asc";
+            sort = string.IsNullOrEmpty(sort) ? "asc":sort;
             if(sort.Equals("desc"))
             {
                 dates = dates.OrderByDescending(d => d.Time);
             }
+            ViewBag.sort = sort;
             int page= pageNum ?? 1;
             return View(dates.ToPagedList(page,pageSize));
         }
