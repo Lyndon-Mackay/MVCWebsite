@@ -12,17 +12,15 @@
         return "";
     }
 }
-function getParamsInLocation(location: string, params: Param[]): string {
-    let joinedParams = params.join("&");
-    if (joinedParams.startsWith("&")) {
-        joinedParams = joinedParams.substring(1);
-    }
-    let locat = location.split('?')[0] + "?" + joinedParams;
-    return locat;
+function getParamsInLocation(location: string, params: Param[]): string { 
+    return location.split('?')[0] + "?" + params.join("&");
 }
 function getAllParams(paramsString: string): Param[] {
     let params: Param[] = new Array();
 
+    if (paramsString == "") {
+        return params;
+    }
     let keyValueString = paramsString.split('&');
     //let statement did not work
     for (var i = 0; i < keyValueString.length; i++) {
@@ -31,6 +29,5 @@ function getAllParams(paramsString: string): Param[] {
         params.push(new Param(split[0], split[1]));
 
     }
-
     return params;
 }
