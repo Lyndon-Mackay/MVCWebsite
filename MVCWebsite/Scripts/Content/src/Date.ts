@@ -9,12 +9,7 @@
             params.push(new Param("sort", "asc"));
         }
         else {
-            if (sort.value == "desc") {
-                sort.value="asc";
-            }
-            else {
-                sort.value = "desc";
-            }
+            sort.value = sort.value == "desc" ? "asc" : "desc";
 
         }
         location = getParamsInLocation(location, params);
