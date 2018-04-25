@@ -21,7 +21,7 @@
 </p>
 <table class="table">
     <tr class="table-title">
-        <!--Need to get display name for but can't do that without-->
+        <!--Need to get display name for but can't do that with pagination-->
         <th id="Time">
             Time
         </th>
@@ -42,7 +42,7 @@
     }
 
 </table>
- @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+ <p>@(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</p>
 
 @Html.PagedListPager(Model, pageNum => Url.Action("Index",
     new { pageNum,ViewBag.sort }))
