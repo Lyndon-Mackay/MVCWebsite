@@ -6,7 +6,7 @@
         let sort = params.find(p => p.name == "sort");
         if (sort == undefined)
         {
-            params.push(new Param("sort", "asc"));
+            params.push(new Param("sort", "desc"));
         }
         else {
             sort.value = sort.value == "desc" ? "asc" : "desc";

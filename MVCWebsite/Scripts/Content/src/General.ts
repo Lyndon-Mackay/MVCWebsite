@@ -28,7 +28,7 @@
 
         let sort = params.find(p => p.name == "sort");
         if (sort == undefined) {
-            sort = new Param("sort", "asc");
+            sort = new Param("sort", "desc");
             params.push(sort);
         }
         //switch sorting
