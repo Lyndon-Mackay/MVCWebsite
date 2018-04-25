@@ -6,7 +6,6 @@
     <title>@ViewBag.Title - Lyndon's MVC</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     @RenderSection("css", required: false)
 
@@ -16,9 +15,9 @@
         <a href="http://lyndonmackay.com/">Home</a>
         <a href="/generals">Generals</a>
         <a href="/dates">Dates</a>
-        <a href="/">index</a>
+        <a href="/">Index</a>
     </nav>
-    <div class="center-div body">
+    <div class="center-div main-div">
         @RenderBody()
     </div>
 
