@@ -9,16 +9,26 @@ a {
     margin: auto 2% auto 2%;
 }
 
-a:hover {
-    color: yellow;
-    background-color: darkslateblue;
-}
+    a:hover {
+        color: yellow;
+        background-color: darkslateblue;
+    }
 
 body {
     background-color: rgb(0, 0, 110);
 }
+
 div {
     margin: auto;
+}
+
+dl > * {
+    color: white;
+    display: contents;
+}
+
+dt {
+    color: aquamarine;
 }
 
 form {
@@ -32,7 +42,7 @@ h1, h2, h3, h4, h5 {
 
 label {
     display: block;
-    color:white;
+    color: white;
 }
 
 li {
@@ -51,19 +61,21 @@ nav {
     z-index: 500;
 }
 
-nav > a {
-    color: orange;
-}
+    nav > a {
+        color: orange;
+        margin: auto 2.5% auto 2.5%;
+    }
+
 p {
     text-align: center;
     margin-top: 30px;
-    color:white;
+    color: white;
 }
 
-p > a {
-    margin-left: 0;
-    margin-right: 0;
-}
+    p > a {
+        margin-left: 0;
+        margin-right: 0;
+    }
 
 table {
     margin: auto;
@@ -78,9 +90,10 @@ td, th {
     background-color: rgb(0, 0, 110);
     opacity: .8;
 }
-td > a:hover{
-    color:floralwhite;
-}
+
+    td > a:hover {
+        color: floralwhite;
+    }
 
 ul {
     list-style: none;
@@ -95,10 +108,20 @@ ul {
     margin-bottom: .5em;
     display: inline-flex;
 }
-.checkbox-div > p{
-    margin-top:0;
-    margin-bottom:0;
+
+    .checkbox-div > p {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+.data-div {
+    display: inline-grid;
+    padding-left: 25%;
 }
+.data-div > * {
+    text-align: left;
+    margin-right: unset;
+ }
 
 .error {
     margin-top: 0;
@@ -108,7 +131,7 @@ ul {
 
 .highlight {
     background-color: rebeccapurple;
-    opacity:0.8
+    opacity: 0.8
 }
 
 .main-div {
@@ -124,10 +147,11 @@ ul {
 .table-title {
     background-color: rebeccapurple;
 }
-.table-title > th:active:not(.non-sortable) {
-    background-color: pink;
-}
 
- .table-title > th:hover:not(.non-sortable) {
-     background-color: purple;
-}
+    .table-title > th:active:not(.non-sortable) {
+        background-color: pink;
+    }
+
+    .table-title > th:hover:not(.non-sortable) {
+        background-color: purple;
+    }
