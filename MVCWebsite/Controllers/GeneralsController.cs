@@ -22,6 +22,10 @@ namespace MVCWebsite.Controllers
             var generals = db.Generals.OrderBy(column + " " + sort);
             if (!string.IsNullOrEmpty(SearchString))
             {
+                /*
+                * Creating a custom expression so the database is only queried once
+                * cannot just call .where as multiple wheres are anded rather then ored
+                */ 
                 ParameterExpression parameter = Expression.Parameter(typeof(General), "g");
 
                 MethodInfo containsInfo = typeof(string).GetMethod("Contains", new[] { typeof(string) });
@@ -29,6 +33,10 @@ namespace MVCWebsite.Controllers
 
                 List<MethodCallExpression> conditions = new List<MethodCallExpression>();
 
+                /*checking if the search fields are checked and adding it towards the search
+                 * Would prefer this conditions in a dictionary for scalibility reasons, but no idea how to do that
+                 * with HTML get
+                 */ 
                 if (SearchCountry)
                 {
                     MethodCallExpression containsInvoke = CreateInvoke(parameter, containsInfo, searchArgument, "Country");
@@ -58,8 +66,13 @@ namespace MVCWebsite.Controllers
                     {
                         e = e.Reduce();
                     }
+                    //One query called!!!
                     var vList = generals.Where(Expression.Lambda<Func<General, bool>>(e, parameter));
-                    return View(vList.ToList());
+                    /*
+                     * Done as parallel since is embarrsiningly parrallel plus the overhead will be neglible 
+                    *on a small query anyway
+                    */ 
+                    return View(vList.AsParallel().ToList());
                 }
 
 

@@ -19,10 +19,12 @@ namespace MVCWebsite.Controllers
                         orderby d.Time
                         select d;
             sort = string.IsNullOrEmpty(sort) ? "asc":sort;
+
             if(sort.Equals("desc"))
             {
                 dates = dates.OrderByDescending(d => d.Time);
             }
+            //So that the view can remember what sort it was on when a new page is called
             ViewBag.sort = sort;
             int page= pageNum ?? 1;
             return View(dates.ToPagedList(page,pageSize));
