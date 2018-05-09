@@ -67,12 +67,12 @@ namespace MVCWebsite.Controllers
                         e = e.Reduce();
                     }
                     //One query called!!!
-                    var vList = generals.Where(Expression.Lambda<Func<General, bool>>(e, parameter));
+                    var vQuery = generals.Where(Expression.Lambda<Func<General, bool>>(e, parameter));
                     /*
                      * Done as parallel since is embarrsiningly parrallel plus the overhead will be neglible 
                     *on a small query anyway
                     */ 
-                    return View(vList.AsParallel().ToList());
+                    return View(vQuery.AsParallel().ToList());
                 }
 
 
