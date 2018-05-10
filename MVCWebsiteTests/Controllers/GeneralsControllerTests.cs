@@ -14,6 +14,7 @@ namespace MVCWebsite.Controllers.Tests
     [TestClass()]
     public class GeneralsControllerTests
     {
+        //TODO refactor the code 
         GenDBContext db = new GenDBContext();
         [TestMethod()]
         public void IndexTest()
@@ -25,20 +26,44 @@ namespace MVCWebsite.Controllers.Tests
             TestSortingAndSearch();
         }
         [TestMethod()]
-        public void  IDTest()
+        public void IDTest()
         {
             GeneralsController genController = new GeneralsController();
             Random gen = new Random();
-            List <General>  genList= db.Generals.ToList();
+            List<General> genList = db.Generals.ToList();
             int testID = gen.Next(genList.Count);
-            ViewResult v = genController.Details(testID) as ViewResult;
+            ViewResult v = genController.Details(genList[testID].ID) as ViewResult;
             General g = v.Model as General;
-            Assert.AreEqual(g, genList[testID]);
+            Assert.AreEqual(g, genList[testID], "Correct id is not being returned");
 
             //null check 
             genController = new GeneralsController();
-            Assert.AreEqual(new HttpStatusCodeResult(HttpStatusCode.BadRequest)
-                , genController.Details(null), "Null check failing");
+            HttpStatusCodeResult correctStatus = new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            ActionResult details = genController.Details(null);
+            HttpStatusCodeResult resultStatus = genController.Details(null) is HttpStatusCodeResult ? details as HttpStatusCodeResult : null;
+            if (resultStatus == null)
+            {
+                Assert.Fail("not responding to nulls correctly");
+            }
+            else {
+                Assert.AreEqual(correctStatus.StatusCode
+                    , resultStatus.StatusCode, "Null check wrong status code");
+            }
+
+            //null general check
+            genController = new GeneralsController();
+            var nullGendetails = genController.Details(-1);
+            var nullGenDetailsResult = nullGendetails is HttpNotFoundResult? nullGendetails as HttpNotFoundResult:null;
+            if (nullGenDetailsResult == null)
+            {
+                Assert.Fail("did not handle non existent general properly");
+            }
+            else
+            {
+
+                var r = new HttpNotFoundResult();
+                Assert.AreEqual(nullGenDetailsResult.StatusCode , r.StatusCode, "Did not handle non existent general");
+            }
         }
         /// <summary>
         /// Tests on empty lists
