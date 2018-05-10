@@ -68,24 +68,31 @@ namespace MVCWebsite.Controllers.Tests
         /// <summary>
         /// Tests on empty lists
         /// </summary>
+        /// 
         private void TestDefault()
         {
-            GeneralsController genController = new GeneralsController();
-            var defaultQuery = db.Generals.OrderBy("ID " + "asc");
-            List<General> correctResult = defaultQuery.ToList();
-            var view = genController.Index() as ViewResult;
+            IQueryable<General> correctQuery;
+            ViewResult view;
+            CreateBaseQueryAndView("asc",out correctQuery, out view);
+            List<General> correctResult = correctQuery.ToList();
             List<General> resultList = (List<General>)view.ViewData.Model;
             CollectionAssert.AreEqual(correctResult, resultList, "The Default list is not correct ");
         }
+        /// <summary>
+        /// Test for correctness on descended sort
+        /// </summary>
         private void TestChangedSort()
         {
-            GeneralsController genController = new GeneralsController();
-            var defaultQuery = db.Generals.OrderBy("ID " + "desc");
-            List<General> correctResult = defaultQuery.ToList();
-            var view = genController.Index(sort:"Desc") as ViewResult;
+            IQueryable<General> correctQuery;
+            ViewResult view;
+            CreateBaseQueryAndView("desc", out correctQuery, out view);
+            List<General> correctResult = correctQuery.ToList();
             List<General> resultList = (List<General>)view.ViewData.Model;
             CollectionAssert.AreEqual(correctResult, resultList, "The descending list is not correct ");
         }
+        /// <summary>
+        /// Test that searching for all is correct
+        /// </summary>
         private void TestSearchAll()
         {
             GeneralsController genController = new GeneralsController();
@@ -105,10 +112,15 @@ namespace MVCWebsite.Controllers.Tests
             }
             CollectionAssert.AreEqual(correctResult, resultList, "The searchall list is not correct ");
         }
+        /// <summary>
+        /// Test that a string that is very likely to not be in the database 
+        /// is in fact not in the database
+        /// </summary>
         private void TestNonExistentString()
         {
             GeneralsController genController = new GeneralsController();
             var defaultQuery = db.Generals.OrderBy("ID " + "asc");
+            //should not be in the database
             string search = "l;kl;jop";
             defaultQuery = defaultQuery.Where("Name.contains(@0) or Country.contains(@0) or Comments.contains(@0)", search);
             List<General> correctResult = defaultQuery.ToList();
@@ -118,10 +130,14 @@ namespace MVCWebsite.Controllers.Tests
             Assert.IsTrue(correctResult.Count == 0,"string is now part of the databse found "+ correctResult.Count +"result");
             CollectionAssert.AreEqual(correctResult, resultList, "The SearchNonexistent list is not correct ");
         }
+        /// <summary>
+        /// test sorting works with search
+        /// </summary>
         private void TestSortingAndSearch()
         {
             GeneralsController genController = new GeneralsController();
             var defaultQuery = db.Generals.OrderBy("ID " + "desc");
+            //TODO Should sanity check for proper characters to be done on public holiday or a weekend
             string search = "l;kl;jop";
             defaultQuery = defaultQuery.Where("Name.contains(@0) or Country.contains(@0) or Comments.contains(@0)", search);
             List<General> correctResult = defaultQuery.ToList();
@@ -132,6 +148,9 @@ namespace MVCWebsite.Controllers.Tests
             CollectionAssert.AreEqual(correctResult, resultList, "The search while sorting list is not correct ");
 
         }
+        /// <summary>
+        /// test the search only checks the appropriate columns
+        /// </summary>
         private void TestOnlyMatchName()
         {
             GeneralsController genController = new GeneralsController();
@@ -148,5 +167,19 @@ namespace MVCWebsite.Controllers.Tests
                 " list is not correct ");
 
         }
+
+        /// <summary>
+        /// Creates a basic query with a basic view common to most of the tests
+        /// </summary>
+        /// <param name="sort">string "asc" or desc</param>
+        /// <param name="defaultQuery">The query asking for a list with the default sort</param>
+        /// <param name="view">The viw returned by an iniltialised controller</param>
+        private void CreateBaseQueryAndView(string sort, out IQueryable<General> defaultQuery, out ViewResult view)
+        {
+            GeneralsController genController = new GeneralsController();
+            defaultQuery = db.Generals.OrderBy("ID " + sort);
+            view = genController.Index() as ViewResult;
+        }
+
     }
 }
