@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace MVCWebsite.Controllers.Tests
 {
@@ -26,7 +27,18 @@ namespace MVCWebsite.Controllers.Tests
         [TestMethod()]
         public void  IDTest()
         {
-            //GeneralsController genController = new GeneralsController();
+            GeneralsController genController = new GeneralsController();
+            Random gen = new Random();
+            List <General>  genList= db.Generals.ToList();
+            int testID = gen.Next(genList.Count);
+            ViewResult v = genController.Details(testID) as ViewResult;
+            General g = v.Model as General;
+            Assert.AreEqual(g, genList[testID]);
+
+            //null check 
+            genController = new GeneralsController();
+            Assert.AreEqual(new HttpStatusCodeResult(HttpStatusCode.BadRequest)
+                , genController.Details(null), "Null check failing");
         }
         /// <summary>
         /// Tests on empty lists
