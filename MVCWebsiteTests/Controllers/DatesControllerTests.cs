@@ -21,7 +21,9 @@ namespace MVCWebsite.Controllers.Tests
             TestBasicSort();
             TestDescSort();
         }
-
+        /// <summary>
+        /// Test asc sort works
+        /// </summary>
         private void TestBasicSort()
         {
             var dates = from d in db.Dates
@@ -34,6 +36,9 @@ namespace MVCWebsite.Controllers.Tests
             List<Date> correctList = dates.ToPagedList(1, 25).ToList();
             CollectionAssert.AreEqual(resultList, correctList, "Basic sorting is not working correctly");
         }
+        /// <summary>
+        /// Test desc sort works
+        /// </summary>
         private void TestDescSort()
         {
             var dates = from d in db.Dates
