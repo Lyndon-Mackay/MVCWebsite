@@ -10,6 +10,12 @@ namespace MVCWebsite.Models
         public int ID { get; set; }
 
         public DateTime Time { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            Date date = obj as Date;
+            return date.ID == ID;
+        }
     }
     public class DateDBContext : DbContext
     {
