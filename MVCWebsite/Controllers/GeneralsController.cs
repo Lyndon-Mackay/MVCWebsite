@@ -22,64 +22,76 @@ namespace MVCWebsite.Controllers
             var generals = db.Generals.OrderBy(column + " " + sort);
             if (!string.IsNullOrEmpty(SearchString))
             {
-                /*
-                * Creating a custom expression so the database is only queried once
-                * cannot just call .where as multiple wheres are anded rather then ored
-                */ 
-                ParameterExpression parameter = Expression.Parameter(typeof(General), "g");
-
-                MethodInfo containsInfo = typeof(string).GetMethod("Contains", new[] { typeof(string) });
-                ConstantExpression searchArgument = Expression.Constant(SearchString, typeof(string));
-
-                List<MethodCallExpression> conditions = new List<MethodCallExpression>();
-
-                /*checking if the search fields are checked and adding it towards the search
-                 * Would prefer this conditions in a dictionary for scalibility reasons, but no idea how to do that
-                 * with HTML get
-                 */ 
-                if (SearchCountry)
-                {
-                    MethodCallExpression containsInvoke = CreateInvoke(parameter, containsInfo, searchArgument, "Country");
-                    conditions.Add(containsInvoke);
-
-                }
-                if (SearchName)
-                {
-                    MethodCallExpression containsInvoke = CreateInvoke(parameter, containsInfo, searchArgument, "Name");
-                    conditions.Add(containsInvoke);
-                }
-                if (SearchComments)
-                {
-                    MethodCallExpression containsInvoke = CreateInvoke(parameter, containsInfo, searchArgument, "Comments");
-
-                    conditions.Add(containsInvoke);
-                }
-                // we should not be searching in no columns
-                if (conditions.Count == 0)
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                else
-                {
-                    Expression e = conditions.Aggregate<Expression>(
-                        (combinedExpression, next) => combinedExpression = Expression.OrElse(combinedExpression, next));
-                    //probably not reducable but worth having a look could save significant time in querying 
-                    while(e.CanReduce)
-                    {
-                        e = e.Reduce();
-                    }
-                    //One query called!!!
-                    var vQuery = generals.Where(Expression.Lambda<Func<General, bool>>(e, parameter));
-                    /*
-                     * Done as parallel since is embarrsiningly parrallel plus the overhead will be neglible 
-                    *on a small query anyway
-                    */ 
-                    return View(vQuery.AsParallel().ToList());
-                }
-
-
+                return HandleSearch(SearchString, SearchCountry, SearchName, SearchComments, generals);
 
             }
             return View(generals.ToList());
         }
+        /// <summary>
+        /// Creates the linq expression for searching and executes the current query
+        /// </summary>
+        /// <param name="SearchString">The term being searched</param>
+        /// <param name="SearchCountry">Is the country being searched?</param>
+        /// <param name="SearchName">Is the name being searched</param>
+        /// <param name="SearchComments">Are the comments being searched</param>
+        /// <param name="generals">The current query</param>
+        /// <returns>The view or an exception</returns>
+        private ActionResult HandleSearch(string SearchString, bool SearchCountry, bool SearchName, bool SearchComments, IQueryable<General> generals)
+        {
+            /*
+                            * Creating a custom expression so the database is only queried once
+                            * cannot just call .where as multiple wheres are anded rather then ored
+                            */
+            ParameterExpression parameter = Expression.Parameter(typeof(General), "g");
+
+            MethodInfo containsInfo = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+            ConstantExpression searchArgument = Expression.Constant(SearchString, typeof(string));
+
+            List<MethodCallExpression> conditions = new List<MethodCallExpression>();
+
+            /*checking if the search fields are checked and adding it towards the search
+             * Would prefer this conditions in a dictionary for scalibility reasons, but no idea how to do that
+             * with HTML get
+             */
+            if (SearchCountry)
+            {
+                MethodCallExpression containsInvoke = CreateInvoke(parameter, containsInfo, searchArgument, "Country");
+                conditions.Add(containsInvoke);
+
+            }
+            if (SearchName)
+            {
+                MethodCallExpression containsInvoke = CreateInvoke(parameter, containsInfo, searchArgument, "Name");
+                conditions.Add(containsInvoke);
+            }
+            if (SearchComments)
+            {
+                MethodCallExpression containsInvoke = CreateInvoke(parameter, containsInfo, searchArgument, "Comments");
+
+                conditions.Add(containsInvoke);
+            }
+            // we should not be searching in no columns
+            if (conditions.Count == 0)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            else
+            {
+                Expression e = conditions.Aggregate<Expression>(
+                    (combinedExpression, next) => combinedExpression = Expression.OrElse(combinedExpression, next));
+                //probably not reducable but worth having a look could save significant time in querying 
+                while (e.CanReduce)
+                {
+                    e = e.Reduce();
+                }
+                //One query called!!!
+                var vQuery = generals.Where(Expression.Lambda<Func<General, bool>>(e, parameter));
+                /*
+                 * Done as parallel since is embarrsiningly parrallel plus the overhead will be neglible 
+                *on a small query anyway
+                */
+                return View(vQuery.AsParallel().ToList());
+            }
+        }
+
         /// <summary>
         /// Used to create a call for a method that uses the search argument plus other built up expressions
         /// the main point of this method is have common code save for the property being called.

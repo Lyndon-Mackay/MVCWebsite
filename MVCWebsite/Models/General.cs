@@ -18,6 +18,12 @@ namespace MVCWebsite.Models
 
         public string Wiki_link { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            //should be constrained in database too not have a copy of anything else
+            General otherGen = obj as General;
+            return ID == otherGen.ID;
+        }
 
     }
     public class GenDBContext : DbContext {
