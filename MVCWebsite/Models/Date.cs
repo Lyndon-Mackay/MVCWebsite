@@ -7,9 +7,19 @@ namespace MVCWebsite.Models
 {
     public class Date
     {
+        public Date(int ID, DateTime time)
+        {
+            this.ID = ID;
+            this.Time = time;
+        }
+        public Date()
+        {
+
+        }
         public int ID { get; set; }
 
         public DateTime Time { get; set; }
+
 
         public override bool Equals(object obj)
         {
