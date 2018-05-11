@@ -14,17 +14,19 @@ namespace MVCWebsite.Controllers.Tests
     [TestClass()]
     public class DatesControllerTests
     {
+        
         private DateDBContext db = new DateDBContext();
+        DatesController datesController = new DatesController();
         /// <summary>
         /// Test asc sort works
         /// </summary>
-         [TestMethod()]
+        [TestMethod()]
         public void TestBasicSort()
         {
             var dates = from d in db.Dates
                         orderby d.Time
                         select d;
-            DatesController datesController = new DatesController();
+
             var view = datesController.Index("", 1, 25) as ViewResult;
             PagedList<Date> resultPage = view.Model as PagedList<Date>;
             List<Date> resultList = resultPage.ToList();
@@ -42,7 +44,6 @@ namespace MVCWebsite.Controllers.Tests
                         select d;
             dates = dates.OrderByDescending(d => d.Time);
 
-            DatesController datesController = new DatesController();
             var view = datesController.Index("desc", 1, 25) as ViewResult;
             PagedList<Date> resultPage = view.Model as PagedList<Date>;
             List<Date> resultList = resultPage.ToList();
@@ -50,6 +51,7 @@ namespace MVCWebsite.Controllers.Tests
 
             CollectionAssert.AreEqual(resultList, correctList, "Desc sorting is not working correctly");
         }
+        //TODO test against pagination
 
     }
 }
