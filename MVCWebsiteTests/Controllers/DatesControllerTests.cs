@@ -15,16 +15,11 @@ namespace MVCWebsite.Controllers.Tests
     public class DatesControllerTests
     {
         private DateDBContext db = new DateDBContext();
-        [TestMethod()]
-        public void IndexTest()
-        {
-            TestBasicSort();
-            TestDescSort();
-        }
         /// <summary>
         /// Test asc sort works
         /// </summary>
-        private void TestBasicSort()
+         [TestMethod()]
+        public void TestBasicSort()
         {
             var dates = from d in db.Dates
                         orderby d.Time
@@ -39,7 +34,8 @@ namespace MVCWebsite.Controllers.Tests
         /// <summary>
         /// Test desc sort works
         /// </summary>
-        private void TestDescSort()
+        [TestMethod()]
+        public void TestDescSort()
         {
             var dates = from d in db.Dates
                         orderby d.Time
