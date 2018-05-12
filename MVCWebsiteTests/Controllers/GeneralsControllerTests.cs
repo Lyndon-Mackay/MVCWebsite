@@ -16,6 +16,9 @@ namespace MVCWebsite.Controllers.Tests
     {
         //TODO refactor the code 
         GenDBContext db = new GenDBContext();
+
+        const string ASCENDING_SORT = "asc";
+        const string DESCENDING_SORT = "desc";
         //persistent controller as even with state it should be correct
         GeneralsController genController = new GeneralsController();
         [TestMethod()]
@@ -66,10 +69,9 @@ namespace MVCWebsite.Controllers.Tests
         [TestMethod()]
         public void TestDefault()
         {
-            const string sort = "asc";
             IQueryable<General> correctQuery;
             ViewResult view;
-            CreateBaseQueryAndView(sort, out correctQuery, out view);
+            CreateBaseQueryAndView(ASCENDING_SORT, out correctQuery, out view);
             List<General> correctResult = correctQuery.ToList();
             List<General> resultList = (List<General>)view.ViewData.Model;
             CollectionAssert.AreEqual(correctResult, resultList, "The Default list is not correct ");
@@ -80,10 +82,9 @@ namespace MVCWebsite.Controllers.Tests
          [TestMethod()]
         public void TestChangedSort()
         {
-            const string sort = "desc";
             IQueryable<General> correctQuery;
             ViewResult view;
-            CreateBaseQueryAndView(sort, out correctQuery, out view);
+            CreateBaseQueryAndView(DESCENDING_SORT, out correctQuery, out view);
             List<General> correctResult = correctQuery.ToList();
             List<General> resultList = (List<General>)view.ViewData.Model;
             CollectionAssert.AreEqual(correctResult, resultList, "The descending list is not correct ");
@@ -96,8 +97,7 @@ namespace MVCWebsite.Controllers.Tests
         {
 
             const string search = "Barca";
-            const string sort = "asc";
-            List<General> correctResult = FullSearch(search, sort);
+            List<General> correctResult = FullSearch(search, ASCENDING_SORT);
             var view = genController.Index(SearchString: search, SearchName: true, SearchCountry: true, SearchComments: true) as ViewResult;
 
             List<General> resultList = (List<General>)view.ViewData.Model;
@@ -121,8 +121,7 @@ namespace MVCWebsite.Controllers.Tests
         {
             //should not be in the database
             const string search = "l;kl;jop";
-            const string sort = "asc";
-            List<General> correctResult = FullSearch(search, sort);
+            List<General> correctResult = FullSearch(search, ASCENDING_SORT);
             var view = genController.Index(SearchString: search, SearchName: true, SearchCountry: true, SearchComments: true) as ViewResult;
             List<General> resultList = (List<General>)view.ViewData.Model; ;
             //if true may need a new string
@@ -135,11 +134,10 @@ namespace MVCWebsite.Controllers.Tests
         [TestMethod()]
         public void TestSortingAndSearch()
         {
-            const string sort = "desc";
             //should have valid results
             string search = "rom";
-            List<General> correctResult = FullSearch(search, sort);
-            var view = genController.Index(sort: sort, SearchString: search, SearchName: true, SearchCountry: true, SearchComments: true) as ViewResult;
+            List<General> correctResult = FullSearch(search, DESCENDING_SORT);
+            var view = genController.Index(sort: DESCENDING_SORT, SearchString: search, SearchName: true, SearchCountry: true, SearchComments: true) as ViewResult;
             List<General> resultList = (List<General>)view.ViewData.Model; ;
             //if true may need a new string
             CollectionAssert.AreEqual(correctResult, resultList, "The descending sort does not work when searched");
@@ -153,7 +151,7 @@ namespace MVCWebsite.Controllers.Tests
         public void TestOnlyMatchName()
         {
 
-            var defaultQuery = db.Generals.OrderBy("ID " + "asc");
+            var defaultQuery = db.Generals.OrderBy("ID " + ASCENDING_SORT);
             const string search = "Barca";
             defaultQuery = defaultQuery.Where("Name.contains(@0)", search);
             List<General> correctResult = defaultQuery.ToList();
