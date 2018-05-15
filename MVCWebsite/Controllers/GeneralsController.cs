@@ -14,6 +14,10 @@ namespace MVCWebsite.Controllers
     public class GeneralsController : Controller
     {
         GenDBContext db = new GenDBContext();
+        public GeneralsController()
+        {
+
+        }
         // GET: Generals
         public ActionResult Index(string SearchString = "", string column = "ID", string sort = "asc",
             bool SearchCountry = false, bool SearchName = false, bool SearchComments = false)
@@ -124,5 +128,7 @@ namespace MVCWebsite.Controllers
             }
             return View(general);
         }
+
+        public GenDBContext genDB { get { return db; } set { db = value; } }
     }
 }
