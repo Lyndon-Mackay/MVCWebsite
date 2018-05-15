@@ -38,18 +38,16 @@ namespace MVCWebsite.Controllers.Tests
                 new General { Name = "Scipio Africanus",Country = "Rome",Comments = "Best known for his role in defeating Hannibal Barca during the second Punic war. Prior to that he campaigned against Carthage in modern day Spain and Portugal.", Wiki_link = "https://en.wikipedia.org/wiki/Scipio_Africanus" },
                 new General {Name = "Sulla",Country= "Rome",Comments = "Best known for his dictatorship over Rome. He also lead in wars against Mithridates and the Socii.", Wiki_link = "https://en.wikipedia.org/wiki/Sulla" }
             }.AsQueryable();
-            Mock<GenDBContext> mockSet = new Mock<GenDBContext>();
-
+            Mock<DbSet<General>> mockSet = new Mock<DbSet<General>>();
 
             mockSet.As<IQueryable<General>>().Setup(x => x.Provider).Returns(data.Provider);
             mockSet.As<IQueryable<General>>().Setup(x => x.Expression).Returns(data.Expression);
             mockSet.As<IQueryable<General>>().Setup(x => x.ElementType).Returns(data.ElementType);
             mockSet.As<IQueryable<General>>().Setup(x => x.GetEnumerator()).Returns(data.GetEnumerator());
 
-
             GeneralsController view = new GeneralsController
             {
-                genDB = mockSet.Object
+                GenDbGenerals = mockSet.Object
             };
             #endregion
             #region access

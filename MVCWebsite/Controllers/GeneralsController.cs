@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System;
 using System.Collections.Generic;
-
+using System.Data.Entity;
 
 namespace MVCWebsite.Controllers
 {
@@ -129,6 +129,6 @@ namespace MVCWebsite.Controllers
             return View(general);
         }
 
-        public GenDBContext genDB { get { return db; } set { db = value; } }
+        public DbSet<General> GenDbGenerals { get { return db.Generals; } set { db.Generals = value; } }
     }
 }
