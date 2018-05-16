@@ -131,6 +131,7 @@
     <Content Include="Scripts\jquery.mark.min.js" />
     <Content Include="Scripts\tsconfig.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <TypeScriptCompile Include="Scripts\Content\src\Calculate.ts" />
     <TypeScriptCompile Include="Scripts\Content\src\Date.ts" />
     <TypeScriptCompile Include="Scripts\Content\src\General.ts" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -148,6 +149,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CalculatorController.cs" />
     <Compile Include="Controllers\DatesController.cs" />
     <Compile Include="Controllers\GeneralsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -176,6 +178,7 @@
     <Content Include="Views\Dates\Delete.cshtml" />
     <Content Include="Views\Dates\Edit.cshtml" />
     <Content Include="Views\Dates\Index.cshtml" />
+    <Content Include="Views\Calculator\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

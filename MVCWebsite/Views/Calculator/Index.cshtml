@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/calculatorController")
+}
+
+<h2>Calculator</h2>
+
+<p>
+    This webpage is made to go with my calculator app. Enter equations here,
+    click sync to send to Calculator program using <b>WebSockets.</b> <br>
+    Get result displayed below. Not the most efficent way of doing things :)
+</p>
+
+<label for="EquationInput">Enter an equation </label>
+<input id="EquationInput" />
+<button id="EquationButton">Send</button>
+<ul id="EquationList"></ul>
+

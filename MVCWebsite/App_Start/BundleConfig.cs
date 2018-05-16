@@ -18,6 +18,8 @@ namespace MVCWebsite.App_Start
                 "~/Scripts/Content/Controller/Date.js"));
             bundles.Add(new ScriptBundle("~/bundles/generalController").Include(
                 "~/Scripts/Content/Controller/General.js"));
+            bundles.Add(new ScriptBundle("~/bundles/calculatorController").Include(
+                "~/Scripts/Content/Controller/Calculate.js"));
             bundles.Add(new ScriptBundle("~/bundles/sharedController").Include(
                 "~/Scripts/Content/Controller/Shared.js"));
             bundles.Add(new StyleBundle("~/Content/css").Include(
