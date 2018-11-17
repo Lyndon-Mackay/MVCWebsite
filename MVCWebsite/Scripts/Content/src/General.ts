@@ -3,10 +3,10 @@
     {
         let locationParamsString = window.location.search.substr(1);
         let params = getAllParams(locationParamsString);
-        for (var i = 0; i < params.length; i++) {
-            let element = $(`input[name=${params[i].name}]`);
+        params.forEach((param) => {
+            let element = $(`input[name=${param.name}]`);
             if (element.is(":checkbox")) {
-                element.prop('checked', params[i].value);
+                element.prop('checked', param.value);
                 //getting name without the search prefix and adding cell postfix for class
                 let name = element.attr('name').replace("Search", "") + "Cell";
 
@@ -15,7 +15,8 @@
                     "className": "highlight"
                 });
             }
-        }
+
+        })
     }
     //clicking on a sortable column change sort and column otherwise as normal
     $(".table-title").children(":not(.non-sortable)").click(e => {

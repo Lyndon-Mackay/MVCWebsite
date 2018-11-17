@@ -13,7 +13,7 @@
     }
 }
 /**
- * readding all params to a variable containing a future url.
+ * reading all params to a variable containing a future url.
  * returns the url with params set by the array of Params objects
  * @param location the current href
  * @param params list of all prams in current href and added params
@@ -31,13 +31,14 @@ function getAllParams(paramsString: string): Param[] {
     if (paramsString == "") {
         return params;
     }
-    let keyValueString = paramsString.split('&');
-    //let statement did not work
-    for (var i = 0; i < keyValueString.length; i++) {
-        let split = keyValueString[i].split('=');
+    let keyValueStrings = paramsString.split('&');
 
-        params.push(new Param(split[0], split[1]));
+    params = keyValueStrings.map((keyValueString) => {
+        let split = keyValueString.split('=');
+
+        return new Param(split[0], split[1])
 
     }
+    )
     return params;
 }
