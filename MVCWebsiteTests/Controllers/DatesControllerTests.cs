@@ -9,6 +9,7 @@ using PagedList;
 using MVCWebsite.Models;
 using System.Web.Mvc;
 using System.Net;
+using System.Data.Entity;
 
 namespace MVCWebsite.Controllers.Tests
 {
@@ -17,16 +18,14 @@ namespace MVCWebsite.Controllers.Tests
     {
 
         private DateDBContext db = new DateDBContext();
-
         /// <summary>
         /// Test asc sort works
         /// </summary>
         [TestMethod()]
         public void TestBasicSort()
         {
-            var dates = from d in db.Dates
-                        orderby d.Time
-                        select d;
+
+            var dates = db.Dates.OrderBy(x => x.Time);
             DatesController datesController = new DatesController();
             var view = datesController.Index("", 1, 25) as ViewResult;
             PagedList<Date> resultPage = view.Model as PagedList<Date>;
@@ -40,10 +39,7 @@ namespace MVCWebsite.Controllers.Tests
         [TestMethod()]
         public void TestDescSort()
         {
-            var dates = from d in db.Dates
-                        orderby d.Time
-                        select d;
-            dates = dates.OrderByDescending(d => d.Time);
+            var dates = db.Dates.OrderByDescending(x => x.Time);
             DatesController datesController = new DatesController();
             var view = datesController.Index("desc", 1, 25) as ViewResult;
             PagedList<Date> resultPage = view.Model as PagedList<Date>;
@@ -67,9 +63,7 @@ namespace MVCWebsite.Controllers.Tests
             //adding new time to database
             Date testDate = new Date(newId, DateTime.Now);
             datesController.Create(testDate);
-            var dates = from d in db.Dates
-                        orderby d.Time
-                        select d;
+            var dates = db.Dates.OrderBy(x => x.Time);
             Assert.IsTrue(dates.ToList().Any(d => d.ID == testDate.ID), "Date was not added to the database");
 
             datesController.DeleteConfirmed(testDate.ID);
@@ -87,9 +81,7 @@ namespace MVCWebsite.Controllers.Tests
 
             DateTime dateTime = DateTime.Now;
             date.Time = dateTime;
-            var dates = from d in db.Dates
-                        orderby d.Time
-                        select d;
+            var dates = db.Dates.OrderBy(x => x.Time);
 
             datesController.Edit(date);
 
